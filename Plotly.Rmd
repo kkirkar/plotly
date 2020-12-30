@@ -1,0 +1,82 @@
+---
+title: "My web page with Plotly"
+author: "Koray KIRKAR"
+date: "12/28/2020"
+always_allow_html: true
+output:
+  ioslides_presentation: default
+---
+
+## Introduction
+
+Create a web page presentation using R Markdown that features a plot created with Plotly. Host your webpage on either GitHub Pages, RPubs, or NeoCities. Your webpage must contain the date that you created the document, and it must contain a plot created with Plotly. We would love to see you show off your creativity!
+
+## Review criteria
+
+The rubric contains the following two questions:
+
+- Does the web page feature a date and is this date less than two months before the date that you're grading this assignment?
+- Is the web page a presentation and does it feature an interactive plot that appears to have been created with Plotly?
+
+## Visualization Code 1
+
+Through this code we try to plot the closing prices of major European stock indices in the years of 1991 to 1998.
+
+```{r echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(dplyr))
+data("EuStockMarkets")
+stocks <- as.data.frame(EuStockMarkets) %>%
+  gather(index, price) %>%
+  mutate(time = rep(time(EuStockMarkets), 4))
+plot_ly(stocks, x = ~time, y = ~price, color = ~index, mode = "lines")
+```
+
+## Visualization Plot 1
+
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(dplyr))
+data("EuStockMarkets")
+stocks <- as.data.frame(EuStockMarkets) %>%
+  gather(index, price) %>%
+  mutate(time = rep(time(EuStockMarkets), 4))
+plot_ly(stocks, x = ~time, y = ~price, color = ~index, mode = "lines")
+```
+
+## Visualization Code 2
+
+Using the `mtcars` dataset we plot can attempt to understand the relationship
+of various factors to gas mileage (`mpg`).
+
+We plot weight (`wt`) vs. mileage (`mpg`) spatially along the x/y axes. We 
+visualize the number of cylinders (`cyl`) as colors and the amount of
+horsepower (`hp`) as the size of an individual point in the plot.
+
+```{r echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(plotly))
+plot_ly(data = mtcars, x = ~wt, y = ~mpg, 
+        color = ~as.factor(cyl), size = ~hp,
+        text = ~paste("Weight: ", wt, '<br>MPG:', mpg),
+        type = "scatter", mode = "markers") %>%
+        layout(title = "Car Data")
+```
+
+## Visualization Plot 2
+
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(plotly))
+plot_ly(data = mtcars, x = ~wt, y = ~mpg, 
+        color = ~as.factor(cyl), size = ~hp,
+        text = ~paste("Weight: ", wt, '<br>MPG:', mpg),
+        type = "scatter", mode = "markers") %>%
+        layout(title = "Car Data")
+```
+
+## Thanks
+
+Check the GitHUb Repository for this project.
+
+[GitHUb Repo - Click Here.](https://github.com/kkirkar/plotly/)
